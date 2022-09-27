@@ -578,14 +578,11 @@ func utlsIdToSpec(id ClientHelloID) (ClientHelloSpec, error) {
 					GREASE_PLACEHOLDER,
 					VersionTLS13,
 					VersionTLS12,
-					//VersionTLS11,
-					//VersionTLS10,
 				}},
 				&UtlsCompressCertExtension{[]CertCompressionAlgo{
 					CertCompressionBrotli,
 				}},
-				//&ALPSExtension{SupportedProtocols: []string{"h2"}},
-				&ApplicationSettingsExtension{SupportedProtocols: []string{"h2"}},
+				&ALPSExtension{SupportedProtocols: []string{"h2"}},
 				&UtlsGREASEExtension{},
 				&UtlsPaddingExtension{GetPaddingLen: BoringPaddingStyle},
 			},
@@ -1146,7 +1143,7 @@ func utlsIdToSpec(id ClientHelloID) (ClientHelloSpec, error) {
 				&FakeRecordSizeLimitExtension{0x4001},
 				&UtlsPaddingExtension{GetPaddingLen: BoringPaddingStyle},
 			}}, nil
-	case HelloFirefox_102.Str(), HelloFirefox_104.Str():
+	case HelloFirefox_102.Str(), HelloFirefox_104.Str(), HelloFirefox_105.Str():
 		return ClientHelloSpec{
 			CipherSuites: []uint16{
 				TLS_AES_128_GCM_SHA256,
@@ -1189,14 +1186,14 @@ func utlsIdToSpec(id ClientHelloID) (ClientHelloSpec, error) {
 				&ALPNExtension{AlpnProtocols: []string{"h2", "http/1.1"}},
 				&StatusRequestExtension{},
 				&GenericExtension{Id: ExtensionDelegatedCredentials},
-				&DelegatedCredentialsExtension{
-					AlgorithmsSignature: []SignatureScheme{ //signature_algorithms
+				/*&DelegatedCredentialsExtension{
+					AlgorithmsSignature: []SignatureScheme{
 						ECDSAWithP256AndSHA256,
 						ECDSAWithP384AndSHA384,
 						ECDSAWithP521AndSHA512,
 						ECDSAWithSHA1,
 					},
-				},
+				},*/
 				&KeyShareExtension{[]KeyShare{
 					{Group: X25519},
 					{Group: CurveP256},
@@ -1204,8 +1201,6 @@ func utlsIdToSpec(id ClientHelloID) (ClientHelloSpec, error) {
 				&SupportedVersionsExtension{[]uint16{
 					VersionTLS13,
 					VersionTLS12,
-					// VersionTLS11,
-					// VersionTLS10
 				}},
 				&SignatureAlgorithmsExtension{SupportedSignatureAlgorithms: []SignatureScheme{
 					ECDSAWithP256AndSHA256,
@@ -1224,10 +1219,8 @@ func utlsIdToSpec(id ClientHelloID) (ClientHelloSpec, error) {
 				&FakeRecordSizeLimitExtension{0x4001},
 				&UtlsPaddingExtension{GetPaddingLen: BoringPaddingStyle},
 			}}, nil
-	case HelloOpera_89.Str(), HelloOpera_90.Str():
+	case HelloOpera_89.Str(), HelloOpera_90.Str(), HelloOpera_91.Str():
 		return ClientHelloSpec{
-			TLSVersMin: VersionTLS10,
-			TLSVersMax: VersionTLS13,
 			CipherSuites: []uint16{
 				GREASE_PLACEHOLDER,
 				TLS_AES_128_GCM_SHA256,
@@ -2080,7 +2073,7 @@ func utlsIdToSpec(id ClientHelloID) (ClientHelloSpec, error) {
 				}},
 			},
 		}, nil
-	case HelloIOS_15_5.Str(), HelloIOS_15_6.Str(), HelloIOS_16_0.Str():
+	case HelloIOS_15_5.Str(), HelloIOS_15_6.Str(), HelloIPad_15_6.Str(), HelloIOS_16_0.Str():
 		return ClientHelloSpec{
 			CipherSuites: []uint16{
 				GREASE_PLACEHOLDER,
@@ -2139,7 +2132,6 @@ func utlsIdToSpec(id ClientHelloID) (ClientHelloSpec, error) {
 					PKCS1WithSHA1,
 				}},
 				&SCTExtension{},
-
 				&KeyShareExtension{[]KeyShare{
 					{Group: CurveID(GREASE_PLACEHOLDER), Data: []byte{0}},
 					{Group: X25519},
@@ -2151,93 +2143,11 @@ func utlsIdToSpec(id ClientHelloID) (ClientHelloSpec, error) {
 					GREASE_PLACEHOLDER,
 					VersionTLS13,
 					VersionTLS12,
+					VersionTLS11,
+					VersionTLS10,
 				}},
 				&UtlsCompressCertExtension{[]CertCompressionAlgo{
-					CertCompressionBrotli,
-				}},
-				&UtlsGREASEExtension{},
-				&UtlsPaddingExtension{GetPaddingLen: BoringPaddingStyle},
-			},
-		}, nil
-
-	case HelloSafari_15_3.Str():
-		return ClientHelloSpec{
-			CipherSuites: []uint16{
-				GREASE_PLACEHOLDER,
-				TLS_AES_128_GCM_SHA256,
-				TLS_AES_256_GCM_SHA384,
-				TLS_CHACHA20_POLY1305_SHA256,
-				TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384,
-				TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,
-				//OLD_TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256,
-				TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256,
-				TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,
-				TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,
-				//OLD_TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256,
-				TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256,
-				DISABLED_TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384,
-				TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256,
-				TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA,
-				TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA,
-				DISABLED_TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384,
-				TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256,
-				TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA,
-				TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA,
-				TLS_RSA_WITH_AES_256_GCM_SHA384,
-				TLS_RSA_WITH_AES_128_GCM_SHA256,
-				DISABLED_TLS_RSA_WITH_AES_256_CBC_SHA256,
-				TLS_RSA_WITH_AES_128_CBC_SHA256,
-				TLS_RSA_WITH_AES_256_CBC_SHA,
-				TLS_RSA_WITH_AES_128_CBC_SHA,
-				TLS_ECDHE_ECDSA_WITH_3DES_EDE_CBC_SHA,
-				TLS_ECDHE_RSA_WITH_3DES_EDE_CBC_SHA,
-				TLS_RSA_WITH_3DES_EDE_CBC_SHA,
-			},
-			CompressionMethods: []uint8{
-				0x00,
-			},
-			Extensions: []TLSExtension{
-				&UtlsGREASEExtension{},
-				&SNIExtension{},
-				&UtlsExtendedMasterSecretExtension{},
-				&RenegotiationInfoExtension{Renegotiation: RenegotiateOnceAsClient}, // ExtensionRenegotiationInfo (boringssl) (65281)
-				&SupportedCurvesExtension{[]CurveID{
-					CurveID(GREASE_PLACEHOLDER),
-					X25519,
-					CurveP256,
-					CurveP384,
-					CurveP521,
-				}},
-				&SupportedPointsExtension{SupportedPoints: []byte{
-					PointFormatUncompressed,
-				}},
-				&ALPNExtension{AlpnProtocols: []string{"h2", "http/1.1"}},
-				&StatusRequestExtension{},
-				&SignatureAlgorithmsExtension{SupportedSignatureAlgorithms: []SignatureScheme{
-					ECDSAWithP256AndSHA256,
-					PSSWithSHA256,
-					PKCS1WithSHA256,
-					ECDSAWithP384AndSHA384,
-					PSSWithSHA384,
-					PKCS1WithSHA384,
-					PSSWithSHA512,
-					PKCS1WithSHA512,
-				}},
-				&SCTExtension{},
-				&KeyShareExtension{[]KeyShare{
-					{Group: CurveID(GREASE_PLACEHOLDER), Data: []byte{0}},
-					{Group: X25519},
-				}},
-				&PSKKeyExchangeModesExtension{[]uint8{
-					PskModeDHE,
-				}},
-				&SupportedVersionsExtension{[]uint16{
-					GREASE_PLACEHOLDER,
-					VersionTLS13,
-					VersionTLS12,
-				}},
-				&UtlsCompressCertExtension{[]CertCompressionAlgo{
-					CertCompressionBrotli,
+					CertCompressionZlib,
 				}},
 				&UtlsGREASEExtension{},
 				&UtlsPaddingExtension{GetPaddingLen: BoringPaddingStyle},
@@ -2302,7 +2212,6 @@ func utlsIdToSpec(id ClientHelloID) (ClientHelloSpec, error) {
 					PKCS1WithSHA1,
 				}},
 				&SCTExtension{},
-
 				&KeyShareExtension{[]KeyShare{
 					{Group: CurveID(GREASE_PLACEHOLDER), Data: []byte{0}},
 					{Group: X25519},
@@ -2314,88 +2223,11 @@ func utlsIdToSpec(id ClientHelloID) (ClientHelloSpec, error) {
 					GREASE_PLACEHOLDER,
 					VersionTLS13,
 					VersionTLS12,
+					VersionTLS11,
+					VersionTLS10,
 				}},
 				&UtlsCompressCertExtension{[]CertCompressionAlgo{
-					CertCompressionBrotli,
-				}},
-				&UtlsGREASEExtension{},
-				&UtlsPaddingExtension{GetPaddingLen: BoringPaddingStyle},
-			},
-		}, nil
-	case HelloIPad_15_6.Str():
-		return ClientHelloSpec{
-			CipherSuites: []uint16{
-				GREASE_PLACEHOLDER,
-				TLS_AES_128_GCM_SHA256,
-				TLS_AES_256_GCM_SHA384,
-				TLS_CHACHA20_POLY1305_SHA256,
-				TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384,
-				TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,
-				TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256,
-				TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,
-				TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,
-				TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256,
-				TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA,
-				TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA,
-				TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA,
-				TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA,
-				TLS_RSA_WITH_AES_256_GCM_SHA384,
-				TLS_RSA_WITH_AES_128_GCM_SHA256,
-				TLS_RSA_WITH_AES_256_CBC_SHA,
-				TLS_RSA_WITH_AES_128_CBC_SHA,
-				TLS_ECDHE_ECDSA_WITH_3DES_EDE_CBC_SHA,
-				TLS_ECDHE_RSA_WITH_3DES_EDE_CBC_SHA,
-				TLS_RSA_WITH_3DES_EDE_CBC_SHA,
-			},
-			CompressionMethods: []byte{
-				CompressionNone,
-			},
-			Extensions: []TLSExtension{
-				&UtlsGREASEExtension{},
-				&SNIExtension{},
-				&UtlsExtendedMasterSecretExtension{},
-				&RenegotiationInfoExtension{Renegotiation: RenegotiateOnceAsClient},
-				&SupportedCurvesExtension{[]CurveID{
-					CurveID(GREASE_PLACEHOLDER),
-					X25519,
-					CurveP256,
-					CurveP384,
-					CurveP521,
-				}},
-				&SupportedPointsExtension{SupportedPoints: []byte{
-					PointFormatUncompressed,
-				}},
-				&ALPNExtension{AlpnProtocols: []string{"h2", "http/1.1"}},
-				&StatusRequestExtension{},
-				&SignatureAlgorithmsExtension{SupportedSignatureAlgorithms: []SignatureScheme{
-					ECDSAWithP256AndSHA256,
-					PSSWithSHA256,
-					PKCS1WithSHA256,
-					ECDSAWithP384AndSHA384,
-					ECDSAWithSHA1,
-					PSSWithSHA384,
-					PSSWithSHA384,
-					PKCS1WithSHA384,
-					PSSWithSHA512,
-					PKCS1WithSHA512,
-					PKCS1WithSHA1,
-				}},
-				&SCTExtension{},
-
-				&KeyShareExtension{[]KeyShare{
-					{Group: CurveID(GREASE_PLACEHOLDER), Data: []byte{0}},
-					{Group: X25519},
-				}},
-				&PSKKeyExchangeModesExtension{[]uint8{
-					PskModeDHE,
-				}},
-				&SupportedVersionsExtension{[]uint16{
-					GREASE_PLACEHOLDER,
-					VersionTLS13,
-					VersionTLS12,
-				}},
-				&UtlsCompressCertExtension{[]CertCompressionAlgo{
-					CertCompressionBrotli,
+					CertCompressionZlib,
 				}},
 				&UtlsGREASEExtension{},
 				&UtlsPaddingExtension{GetPaddingLen: BoringPaddingStyle},

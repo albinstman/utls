@@ -617,6 +617,7 @@ var (
 	HelloRandomizedNoALPN = ClientHelloID{helloRandomizedNoALPN, helloAutoVers, nil, EmptyClientHelloSpecFactory}
 
 	// The rest will will parrot given browser.
+	HelloFirefox_Auto = HelloFirefox_105
 	HelloFirefox_Auto = HelloFirefox_104
 	HelloFirefox_Auto = HelloFirefox_120
 	HelloFirefox_55   = ClientHelloID{helloFirefox, "55", nil, EmptyClientHelloSpecFactory}
@@ -626,6 +627,7 @@ var (
 	HelloFirefox_99   = ClientHelloID{helloFirefox, "99", nil, EmptyClientHelloSpecFactory}
 	HelloFirefox_102  = ClientHelloID{helloFirefox, "102", nil, EmptyClientHelloSpecFactory}
 	HelloFirefox_104  = ClientHelloID{helloFirefox, "104", nil, EmptyClientHelloSpecFactory}
+	HelloFirefox_105  = ClientHelloID{helloFirefox, "105", nil, EmptyClientHelloSpecFactory}
 	HelloFirefox_105  = ClientHelloID{helloFirefox, "105", nil}
 	HelloFirefox_120  = ClientHelloID{helloFirefox, "120", nil, nil}
 
@@ -652,7 +654,8 @@ var (
 	// Beta: PQ extension added. However, uTLS doesn't ship with full PQ support. Use at your own discretion.
 	HelloChrome_115_PQ     = ClientHelloID{helloChrome, "115_PQ", nil, nil}
 	HelloChrome_115_PQ_PSK = ClientHelloID{helloChrome, "115_PQ_PSK", nil, nil}
-	HelloOpera_Auto = HelloOpera_90
+	HelloOpera_Auto = HelloOpera_91
+	HelloOpera_91   = ClientHelloID{helloOpera, "91", nil, EmptyClientHelloSpecFactory}
 	HelloOpera_90   = ClientHelloID{helloOpera, "90", nil, EmptyClientHelloSpecFactory}
 	HelloOpera_89   = ClientHelloID{helloOpera, "89", nil, EmptyClientHelloSpecFactory}
 
@@ -691,7 +694,6 @@ var (
 	HelloIPad_15_6 = ClientHelloID{helloIPad, "15.6", nil, EmptyClientHelloSpecFactory}
 
 	HelloSafari_Auto   = HelloSafari_16_0
-	HelloSafari_15_3   = ClientHelloID{helloSafari, "15.3", nil, EmptyClientHelloSpecFactory}
 	HelloSafari_15_6_1 = ClientHelloID{helloSafari, "15.6.1", nil, EmptyClientHelloSpecFactory}
 	HelloSafari_16_0   = ClientHelloID{helloSafari, "16.0", nil, EmptyClientHelloSpecFactory}
 
