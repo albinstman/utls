@@ -3352,6 +3352,20 @@ func (uconn *UConn) applyPresetByID(id ClientHelloID) (err error) {
 			}
 		}
 
+		if uconn.WithForceHttp1 {
+			for _, ext := range spec.Extensions {
+				switch ext.(type) {
+				case *ALPNExtension:
+					alpnExt, ok := ext.(*ALPNExtension)
+					if !ok {
+						return fmt.Errorf("extension is not of type *ALPNExtension")
+					}
+
+					alpnExt.AlpnProtocols = []string{"http/1.1"}
+				}
+			}
+		}
+
 		if uconn.WithRandomTLSExtensionOrder {
 			spec, err = shuffleExtensions(spec)
 			if err != nil {

@@ -88,7 +88,7 @@ func (c *Roller) Dial(network, addr, serverName string) (*UConn, error) {
 			return nil, err // on tcp Dial failure return with error right away
 		}
 
-		client := UClient(tcpConn, nil, helloID, helloID.RandomExtensionOrder)
+		client := UClient(tcpConn, nil, helloID, helloID.RandomExtensionOrder, false)
 		client.SetSNI(serverName)
 		client.SetDeadline(time.Now().Add(c.TlsHandshakeTimeout))
 		err = client.Handshake()
