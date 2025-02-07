@@ -699,23 +699,10 @@ func (e *ALPNExtension) Write(b []byte) (int, error) {
 // applicationSettingsExtension represents the TLS ALPS extension.
 // At the time of this writing, this extension is currently a draft:
 // https://datatracker.ietf.org/doc/html/draft-vvv-tls-alps-01
+// Due to https://boringssl.googlesource.com/boringssl/+/HEAD/include/openssl/tls1.h#115 we need to support both 17613 and 17513
+// https://boringssl.googlesource.com/boringssl/+/HEAD/include/openssl/tls1.h#115
 type applicationSettingsExtension struct {
 	codePoint uint16
-}
-
-func NewApplicationSettingsExtension(supportedProtocols ...string) *ApplicationSettingsExtension {
-	return &ApplicationSettingsExtension{
-		CodePoint:          ExtensionALPS,
-		SupportedProtocols: supportedProtocols,
-	}
-}
-
-// same name as google is using https://boringssl.googlesource.com/boringssl/+/HEAD/include/openssl/tls1.h#115
-func NewApplicationSettingsExtensionOld(supportedProtocols ...string) *ApplicationSettingsExtension {
-	return &ApplicationSettingsExtension{
-		CodePoint:          ExtensionALPSOld,
-		SupportedProtocols: supportedProtocols,
-	}
 }
 
 func (e *applicationSettingsExtension) writeToUConn(uc *UConn) error {
