@@ -12,10 +12,10 @@ import (
 	"fmt"
 	"io"
 
+	"github.com/albinstman/utls/internal/fips140tls"
+	"github.com/albinstman/utls/internal/hpke"
+	"github.com/albinstman/utls/internal/tls13"
 	"github.com/andybalholm/brotli"
-	"github.com/bogdanfinn/utls/internal/fips140tls"
-	"github.com/bogdanfinn/utls/internal/hpke"
-	"github.com/bogdanfinn/utls/internal/tls13"
 	"github.com/klauspost/compress/zstd"
 )
 

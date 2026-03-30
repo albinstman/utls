@@ -12,7 +12,7 @@ import (
 	"hash"
 	"io"
 
-	"github.com/bogdanfinn/utls/internal/tls13"
+	"github.com/albinstman/utls/internal/tls13"
 )
 
 // This file contains the functions necessary to compute the TLS 1.3 key
@@ -56,7 +56,7 @@ type keySharePrivateKeys struct {
 	mlkem      *mlkem.DecapsulationKey768
 	mlkemEcdhe *ecdh.PrivateKey // [uTLS] seperate ecdhe key for pq keyshare in line with Chrome, instead of reusing ecdhe key like stdlib
 	// [FIX] Add this field
-	keys       map[CurveID]*ecdh.PrivateKey
+	keys map[CurveID]*ecdh.PrivateKey
 }
 
 const x25519PublicKeySize = 32

@@ -18,11 +18,11 @@ import (
 	"sort"
 	"time"
 
-	"github.com/bogdanfinn/utls/internal/byteorder"
-	"github.com/bogdanfinn/utls/internal/fips140tls"
-	"github.com/bogdanfinn/utls/internal/hkdf"
-	"github.com/bogdanfinn/utls/internal/hpke"
-	"github.com/bogdanfinn/utls/internal/tls13"
+	"github.com/albinstman/utls/internal/byteorder"
+	"github.com/albinstman/utls/internal/fips140tls"
+	"github.com/albinstman/utls/internal/hkdf"
+	"github.com/albinstman/utls/internal/hpke"
+	"github.com/albinstman/utls/internal/tls13"
 )
 
 // maxClientPSKIdentities is the number of client PSK identities the server will

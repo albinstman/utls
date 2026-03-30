@@ -9,7 +9,7 @@ import (
 	"fmt"
 	"io"
 
-	"github.com/bogdanfinn/utls/internal/quicvarint/protocol"
+	"github.com/albinstman/utls/internal/quicvarint/protocol"
 )
 
 // taken from the QUIC draft

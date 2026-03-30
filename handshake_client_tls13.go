@@ -19,8 +19,8 @@ import (
 	"slices"
 	"time"
 
-	"github.com/bogdanfinn/utls/internal/hkdf"
-	"github.com/bogdanfinn/utls/internal/tls13"
+	"github.com/albinstman/utls/internal/hkdf"
+	"github.com/albinstman/utls/internal/tls13"
 )
 
 type clientHandshakeStateTLS13 struct {
@@ -611,7 +611,7 @@ func (hs *clientHandshakeStateTLS13) establishHandshakeKeys() error {
 		// 2. Fallback to the legacy single field.
 		clientKey = hs.keyShareKeys.ecdhe
 	}
-	
+
 	// 3. Last resort fallback for MLKEM if map wasn't populated for it
 	if clientKey == nil && (selectedGroup == X25519MLKEM768 || selectedGroup == X25519Kyber768Draft00) {
 		clientKey = hs.keyShareKeys.mlkemEcdhe
