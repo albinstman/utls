@@ -5,8 +5,11 @@ go 1.24
 toolchain go1.24.1
 
 retract (
+	v1.16.1 // Contains retractions only.
+	v1.16.0 // Stale tag from a previous fork, cached by proxy.golang.org.
 	v1.4.1 // #218
 	v1.4.0 // #218 panic on saveSessionTicket
+	v0.0.1 // Stale tag from a previous fork, cached by proxy.golang.org.
 )
 
 require (
