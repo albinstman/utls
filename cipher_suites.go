@@ -18,7 +18,7 @@ import (
 	"runtime"
 	_ "unsafe" // for linkname
 
-	"github.com/bogdanfinn/utls/internal/boring"
+	"github.com/albinstman/utls/internal/boring"
 	"golang.org/x/crypto/chacha20poly1305"
 	"golang.org/x/sys/cpu"
 )
