@@ -674,6 +674,14 @@ func (hs *clientHandshakeStateTLS13) establishHandshakeKeys() error {
 
 	handshakeSecret := earlySecret.HandshakeSecret(sharedKey)
 
+	// verified-egress: export the Tier-1 handshake_secret over the key-log side
+	// channel so an out-of-band auditor can decrypt this session and verify the
+	// committing server Finished. Changes nothing on the wire.
+	if err := c.config.writeKeyLog("UTLS_HANDSHAKE_SECRET", hs.hello.random, handshakeSecret.Secret()); err != nil {
+		c.sendAlert(alertInternalError)
+		return err
+	}
+
 	clientSecret := handshakeSecret.ClientHandshakeTrafficSecret(hs.transcript)
 	c.out.setTrafficSecret(hs.suite, QUICEncryptionLevelHandshake, clientSecret)
 	serverSecret := handshakeSecret.ServerHandshakeTrafficSecret(hs.transcript)

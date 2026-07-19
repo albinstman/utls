@@ -29,3 +29,10 @@ func (s *MasterSecret) Secret() []byte {
 	}
 	return nil
 }
+
+func (s *HandshakeSecret) Secret() []byte {
+	if s != nil {
+		return s.secret
+	}
+	return nil
+}
