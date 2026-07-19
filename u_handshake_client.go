@@ -100,8 +100,12 @@ func (hs *clientHandshakeStateTLS13) decompressCert(m utlsCompressedCertificateM
 	rawMsg[2] = uint8(m.uncompressedLength >> 8)
 	rawMsg[3] = uint8(m.uncompressedLength)
 
-	n, err := decompressed.Read(rawMsg[4:])
-	if err != nil && !errors.Is(err, io.EOF) {
+	// Fill the whole buffer: a single Read may return fewer bytes than requested for a
+	// multi-block compressed stream (large cert chains span several blocks), so loop with
+	// io.ReadFull. A stream shorter than uncompressedLength surfaces as io.EOF /
+	// io.ErrUnexpectedEOF and is reported by the length check below (RFC 8879 §4).
+	n, err := io.ReadFull(decompressed, rawMsg[4:])
+	if err != nil && !errors.Is(err, io.EOF) && !errors.Is(err, io.ErrUnexpectedEOF) {
 		c.sendAlert(alertBadCertificate)
 		return nil, err
 	}
